@@ -9,6 +9,9 @@ import 'employeedb_provider.dart';
 
 
 class EmployeeApiProvider {
+
+
+
   Future<List<Employee>> getAllEmployees() async {
     var url = "https://jsonplaceholder.typicode.com/users";
     Response response = await Dio().get(url);
@@ -16,6 +19,7 @@ class EmployeeApiProvider {
     return (response.data as List).map((employee) {
       print('Inserting $employee');
       DBProvider.db.createEmployee(Employee.fromJson(employee));
+
     }).toList();
   }
 }

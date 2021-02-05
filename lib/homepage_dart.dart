@@ -85,7 +85,8 @@ class _HomePageState extends State<Employ> {
   }
 
   _buildEmployeeListView() {
-    return FutureBuilder(
+    return
+      FutureBuilder(
       future: DBProvider.db.getAllEmployees(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (!snapshot.hasData) {
@@ -106,8 +107,8 @@ class _HomePageState extends State<Employ> {
                   style: TextStyle(fontSize: 20.0),
                 ),
                 title: Text(
-                    "Name: ${snapshot.data[index].email} ${snapshot.data[index].username} "),
-                subtitle: Text('EMAIL: ${snapshot.data[index].name}'),
+                    "${snapshot.data[index].email} ${snapshot.data[index].username} "),
+                subtitle: Text(' ${snapshot.data[index].name}'),
               );
             },
           );
