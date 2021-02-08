@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mission_mangal/service/splash.dart';
 
 import 'homepage_dart.dart';
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home:Employ(),
+      home:SplashScreen(),
     );
   }
 }
