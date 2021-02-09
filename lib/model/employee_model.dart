@@ -7,6 +7,15 @@ String employeeToJson(List<Employee> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Employee {
+  int id;
+  String name;
+  String username;
+  String email;
+  Address address;
+  String phone;
+  String website;
+  Company company;
+
   Employee({
     this.id,
     this.name,
@@ -18,14 +27,7 @@ class Employee {
     this.company,
   });
 
-  int id;
-  String name;
-  String username;
-  String email;
-  Address address;
-  String phone;
-  String website;
-  Company company;
+
 
   factory Employee.fromJson(Map<String, dynamic> json) => Employee(
     id: json["id"] == null ? null : json["id"],
@@ -103,24 +105,26 @@ class Geo {
 }
 
 class Company {
+  String c_name;
+  String catchPhrase;
+  String bs;
+
   Company({
-    this.name,
+    this.c_name,
     this.catchPhrase,
     this.bs,
   });
 
-  String name;
-  String catchPhrase;
-  String bs;
+
 
   factory Company.fromJson(Map<String, dynamic> json) => Company(
-    name: json["name"] == null ? null : json["name"],
+    c_name: json["c_name"] == null ? null : json["c_name"],
     catchPhrase: json["catchPhrase"] == null ? null : json["catchPhrase"],
     bs: json["bs"] == null ? null : json["bs"],
   );
 
   Map<String, dynamic> toJson() => {
-    "name": name == null ? null : name,
+    "c_name": c_name == null ? null : c_name,
     "catchPhrase": catchPhrase == null ? null : catchPhrase,
     "bs": bs == null ? null : bs,
   };

@@ -12,6 +12,7 @@ class DBProvider
   static final DBProvider db = DBProvider._();
 
   DBProvider._();
+
   Future<Database> get database async
   {
     if (_database != null) return _database;
@@ -42,11 +43,11 @@ class DBProvider
               'FOREIGN KEY(adrs_id) REFERENCES Employee(id)'
               ')');
           await db.execute('CREATE TABLE Company('
-                'cid INTEGER,'
-              'name TEXT,'
+              'c_id INTEGER,'
+              'c_name TEXT,'
               'catchPhrase TEXT,'
               'bs TEXT,'
-              'FOREIGN KEY(adrs_id) REFERENCES Employee(id)'
+              'FOREIGN KEY(c_id) REFERENCES Employee(id)'
 
          ')');
         });
@@ -75,8 +76,8 @@ class DBProvider
 
     Company newCompany =newEmployee.company;
     final CompanyRes = await db.insert('Company', {
-      'cid':newEmployee.id,
-      'name':newCompany.name,
+      'c_id':newEmployee.id,
+      'c_name':newCompany.c_name,
       'catchPhrase':newCompany.catchPhrase,
       'bs':newCompany.bs
     });
@@ -89,21 +90,32 @@ class DBProvider
   }
 
 
+
+  //
+  // Future<int> update(Map<String, dynamic> row)async{
+  //     Database db =await db.database;
+  //     int id =row[id];
+  //     return await db.update(table, row, where: '$id=?', whereArgs:[id]);
+  //
+  //   }
+
   Future<List<Employee>> getAllEmployees() async {
     final db = await database;
-    // final res =await db.query("SELECT * FROM Employee");
-    final res = await db.rawQuery("SELECT Employee.id,"
-        "Employee.name,"
-        "Employee.username,"
-        "Employee.email,"
-        "Employee.website,"
-        "Address.street,"
-        "Address.suite,"
-        "Address.city,"
-        "Address.zipcode,"
-        "Company.name,"
-        "Company.bs"
-        "FROM Employee INNER JOIN Address on (Employee.id=Address.adrs_id) INNER JOIN Company on (Employee.id=Company.cid)"
+        final res = await db.rawQuery( "SELECT Employee.id,"
+            "Employee.name,"
+            "Employee.username,"
+            "Employee.email,"
+            "Employee.phone,"
+            "Employee.website,"
+            "Address.street,"
+            "Address.suite,"
+            "Address.city,"
+            "Address.zipcode,"
+            "Company.c_name,"
+            "Company.catchPhrase,"
+            "Company.bs"
+            " FROM Employee INNER JOIN Address on (Employee.id=Address.adrs_id)"
+            " INNER JOIN Company on (Employee.id=Company.c_id)"
 
         // +"AND" + "INNER JOIN Employee.id=Company.cid"
     );
@@ -116,14 +128,35 @@ class DBProvider
     }).toList() : [];
     return list;
   }
+/// update from data base table
+//   Future<int> update(Employee user) async {
+//
+//     var db = await database;
+//
+//     final res = await db.update('Employee',
+//         {
+//       'id': user.id,
+//       'email': user.email,
+//       'username': "sky-cliff",
+//       'name': user.name,
+//       'phone': user.phone,
+//
+//     },
+//         conflictAlgorithm: ConflictAlgorithm.replace,
+//         where: "id = ?", whereArgs: [user.id]);
+//     print("data will be updated");
+//     return res;
+//   }
+  Future<int> update() async {
+    final db = await database;
+    final res = await db
+        .rawUpdate("UPDATE Employee SET name = 'Veeru' WHERE id = 2");
+    print(res);
+    print("data will be  update");
+    return res;
+  }
 
-  // void update() async {
-  //   Map<String, dynamic> row = {
-  //     DBProvider._database: int.parse('${this.db.text}'),
-  //   };
-  //   final rowAffected = await DBProvider._update(row);
-  //   print('updated $rowAffected row(s)');
-  // }
+
 }
 
 
